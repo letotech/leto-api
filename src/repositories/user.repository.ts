@@ -6,8 +6,7 @@ import { BaseRepository } from "./base/base.repository";
 import { IUserRepository } from "./interfaces/user.interface.repository";
 import { FindUserDto } from "src/app/user/dto/find-user.dto";
 import { CreateUserDto } from "src/app/user/dto/create-user.dto";
-import { UpdateUserDto } from "src/app/user/dto/update-user.dto";
-import { FindOneOptions } from "typeorm/driver/mongodb/typings.js";
+
 
 @Injectable()
 export class UserRepository
@@ -15,7 +14,7 @@ export class UserRepository
     implements IUserRepository 
     {
     constructor(
-        @InjectRepository(User, process.env.NEON_DB_URL)
+        @InjectRepository(User)
         private readonly ormRepository: Repository<User>,
     ){
         super(ormRepository)

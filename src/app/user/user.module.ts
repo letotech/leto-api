@@ -9,7 +9,6 @@ import { UserRepository } from "src/repositories/user.repository";
     imports: [
         TypeOrmModule.forFeature(
             [User],
-            process.env.NEON_DB_URL
         )
     ],
     controllers: [UserController],
