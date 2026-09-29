@@ -1,8 +1,10 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { User } from "src/providers/database/entities/neon-db/user.entity";
 import { UserRepository } from "src/repositories/user.repository";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { FindUserDto } from "./dto/find-user.dto";
+import bcrypt from 'bcrypt'
+import { isExternal } from "util/types";
 
 @Injectable()
 export class UserService {
@@ -12,8 +14,25 @@ export class UserService {
     ){}
 
     async create(payload: CreateUserDto): Promise<User>{
-        const user = await this.userRepository.create(payload);
-        return user;
+        let { email, password } = payload
+        const user = await this.userRepository.findOne({
+            where: { email }
+        })
+
+        if(user){
+            throw new BadRequestException("Email já cadastrado. Caso tenha esquecido a sua senha, clique em recuperar senha");
+        }
+
+        try {
+            const salt = 10;
+            const hash = await bcrypt.hash(password, salt)
+            password = hash
+        } catch(err){
+            console.log(err)
+            throw new InternalServerErrorException(err)
+        }
+
+        return await this.userRepository.create(payload);
     }
 
     async find(payload?: FindUserDto): Promise<User[]>{

@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { neonDatabase } from './providers/database/config/neon.db';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './app/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { UserModule } from './app/user/user.module';
       ...neonDatabase,
       autoLoadEntities: true
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
