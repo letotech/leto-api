@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Length, MaxLength, MinLength, ValidateIf } from "class-validator"
+import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max, MaxLength, MinLength, ValidateIf } from "class-validator"
 import { Gender } from "../../../shared/enums/gender.enum";
 
 export class CreateUserDto {
@@ -11,6 +11,11 @@ export class CreateUserDto {
     @IsNotEmpty()
     @MaxLength(100)
     last_name: string
+
+    @IsString()
+    @IsNotEmpty()
+    @MaxLength(200)
+    fullName: string
 
     @IsEmail()
     @IsNotEmpty()

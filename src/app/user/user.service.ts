@@ -1,10 +1,11 @@
-import { BadRequestException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { User } from "src/providers/database/entities/neon-db/user.entity";
 import { UserRepository } from "src/repositories/user.repository";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { FindUserDto } from "./dto/find-user.dto";
 import bcrypt from 'bcrypt'
-import { isExternal } from "util/types";
+import { SignInDto } from "./dto/sign-in.dto";
+import * as jwt from "jsonwebtoken"
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,8 @@ export class UserService {
     ){}
 
     async create(payload: CreateUserDto): Promise<User>{
-        let { email, password } = payload
+        let { email, password, firstName, last_name } = payload
+
         const user = await this.userRepository.findOne({
             where: { email }
         })
@@ -33,6 +35,40 @@ export class UserService {
         }
 
         return await this.userRepository.create(payload);
+    }
+
+    async signIn(payload: SignInDto): Promise<{
+        accessToken;
+    }> {
+        const user = await this.userRepository.findOne({ 
+            where: { email: payload.email }
+        })
+
+        if(!user){
+            throw new UnauthorizedException('Usuário ou senha inválido')
+        }
+
+        const isValid = await bcrypt.compare(payload.password, user.password)
+        if(!isValid){
+            throw new UnauthorizedException('Usuário ou senha inválido')
+        }
+        return this.generateUserToken(user);
+    }
+
+    async generateUserToken(user: User) {
+        const accessToken = jwt.sign(
+            {
+                id: user.id,
+                name: user.fullName,
+                email: user.email,
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: '14D'
+            },
+        );
+
+        return { accessToken }
     }
 
     async find(payload?: FindUserDto): Promise<User[]>{
