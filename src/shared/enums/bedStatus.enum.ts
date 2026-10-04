@@ -1,0 +1,9 @@
+export enum BedStatus {
+    AVAILABLE = 1,
+    OCCUPIED = 2,
+    WAITING_CLEANING = 3,
+    IN_CLEANING = 4,
+    WAITING_MAINTENANCE = 5,
+    IN_MAINTENANCE = 6,
+    RESERVED = 7
+}

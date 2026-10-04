@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { neonDatabase } from './providers/database/config/neon.db';
 import { ConfigModule } from '@nestjs/config';
+import { BedModule } from './app/beds/bed.module';
 import { UserModule } from './app/user/user.module';
 
 @Module({
@@ -17,7 +18,8 @@ import { UserModule } from './app/user/user.module';
       ...neonDatabase,
       autoLoadEntities: true
     }),
-    UserModule
+    UserModule,
+    BedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
