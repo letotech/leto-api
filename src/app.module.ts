@@ -7,6 +7,7 @@ import { neonDatabase } from './providers/database/config/neon.db';
 import { ConfigModule } from '@nestjs/config';
 import { BedModule } from './app/beds/bed.module';
 import { UserModule } from './app/user/user.module';
+import { AuthModule } from './app/auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './app/user/user.module';
     }),
     UserModule,
     BedModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

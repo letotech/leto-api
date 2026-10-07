@@ -10,7 +10,7 @@ export class User {
     firstName: string
 
     @Column({ name: 'last_name' })
-    last_name: string
+    lastName: string
 
     @Column({ name: 'full_name' })
     fullName: string
