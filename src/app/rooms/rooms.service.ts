@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 
 import { Room } from 'src/providers/database/entities/neon-db/rooms.entity';
-import { RoomRepository } from 'src/repositories/room.repository';
+import { RoomRepository } from 'src/repositories/rooms.repository';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { FindRoomDto } from './dto/find-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
