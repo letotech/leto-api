@@ -1,10 +1,11 @@
+
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Room } from 'src/providers/database/entities/neon-db/room.entity';
+import { Room } from 'src/providers/database/entities/neon-db/rooms.entity';
 import { BaseRepository } from './base/base.repository';
-import { IRoomRepository } from './interfaces/room.interface.repository';
+import { IRoomRepository } from './interfaces/rooms.interface.repository';
 
 import { FindRoomDto } from 'src/app/rooms/dto/find-room.dto';
 import { CreateRoomDto } from 'src/app/rooms/dto/create-room.dto';
@@ -23,17 +24,22 @@ export class RoomRepository
 
     async customFind(params: FindRoomDto): Promise<Room[]> {
 
-        const {
-            organizationId,
-        } = params;
+        const { id, roomsCode } = params;
 
         const queryBuilder =
             this.ormRepository.createQueryBuilder('room');
 
-        if (organizationId != null) {
+        if (id != null) {
             queryBuilder.andWhere(
-                'room.organizationId = :organizationId',
-                { organizationId }
+                'room.id = :id',
+                { id }
+            );
+        }
+
+        if (roomsCode != null) {
+            queryBuilder.andWhere(
+                'room.roomsCode = :roomsCode',
+                { roomsCode }
             );
         }
 

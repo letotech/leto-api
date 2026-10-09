@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { Room } from 'src/providers/database/entities/neon-db/rooms.entity';
-import { RoomService } from './room.service';
+import { RoomService } from './rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { FindRoomDto } from './dto/find-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';

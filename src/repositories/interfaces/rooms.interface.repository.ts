@@ -1,4 +1,4 @@
-import { Room } from '../../entities/neon-db/room.entity';
+import { Room } from '../../providers/database/entities/neon-db/rooms.entity';
 import { CreateRoomDto } from 'src/app/rooms/dto/create-room.dto';
 import { FindRoomDto } from 'src/app/rooms/dto/find-room.dto';
 
