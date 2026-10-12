@@ -7,6 +7,7 @@ import {
 	ParseIntPipe,
 	Patch,
 	Post,
+	Put,
 	Query,
 } from '@nestjs/common';
 
@@ -40,7 +41,7 @@ export class RoomController {
 		return this.roomService.findOne(id);
 	}
 
-	@Patch(':id')
+	@Put(':id')
 	async update(
 		@Param('id', ParseIntPipe) id: number,
 		@Body() payload: UpdateRoomDto,
