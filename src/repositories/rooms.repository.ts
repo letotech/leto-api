@@ -22,8 +22,7 @@ export class RoomRepository
         super(ormRepository);
     }
 
-    async customFind(params: FindRoomDto): Promise<Room[]> {
-
+    async customFind(params: FindRoomDto = {}): Promise<Room[]> {
         const { id, roomsCode } = params;
 
         const queryBuilder =
@@ -32,14 +31,14 @@ export class RoomRepository
         if (id != null) {
             queryBuilder.andWhere(
                 'room.id = :id',
-                { id }
+                { id },
             );
         }
 
         if (roomsCode != null) {
             queryBuilder.andWhere(
                 'room.roomsCode = :roomsCode',
-                { roomsCode }
+                { roomsCode },
             );
         }
 
@@ -47,7 +46,6 @@ export class RoomRepository
     }
 
     async create(params: CreateRoomDto): Promise<Room> {
-
         const room = this.ormRepository.create(params);
 
         return await this.ormRepository.save(room);
